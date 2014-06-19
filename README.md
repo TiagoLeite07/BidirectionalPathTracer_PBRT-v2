@@ -10,7 +10,6 @@ Add BDPT to PBRT-v2:
 - Open file core/api.cpp and look for the MakeSurfaceIntegrator function
 
 - Add this code to the MakeSurfaceIntegrator funcion: 
-    else if (name == "bidirectionalpath") 
-      si = CreateBidirectionalPathSurfaceIntegrator(paramSet);
+    else if (name == "bidirectionalpath") si = CreateBidirectionalPathSurfaceIntegrator(paramSet);
 
--Build the project
+- Build the project
