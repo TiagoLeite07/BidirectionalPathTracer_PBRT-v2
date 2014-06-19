@@ -1,0 +1,140 @@
+LookAt 0 -3.4 0	0 1 0 	 0 0 1
+Camera "perspective" "float fov" [45]
+Sampler "stratified" "integer xsamples" [30] "integer ysamples" [30] "bool jitter" ["true"]
+Film "image" "string filename" ["final_pt_teste3.exr"] "integer xresolution" [300] "integer yresolution" [300] 
+SurfaceIntegrator "path"
+WorldBegin
+Identity
+# lines starting with # are comments
+# Point Light Source
+#AttributeBegin
+#  LightSource "point"
+#	"color I" [25 25 25]
+#	"point from" [0 0 0.9999]
+#AttributeEnd
+
+AttributeBegin
+  AreaLightSource "area" 
+		"color L"    [25 25 25]
+		"integer nsamples" [16]
+  Shape "trianglemesh" 
+		#"integer indices" [2 0 1 2 1 3]
+		#"point P" [-0.25 -0.25 0.80     0.25 -0.25 0.80     -0.25 0.25 0.80     0.25 0.25 0.80 ]
+		"integer indices" [2 1 0 2 3 1]
+		"point P" [-0.25 -0.25 0.99     0.25 -0.25 0.99     -0.25 0.25 0.99     0.25 0.25 0.99 ]
+
+AttributeEnd
+
+Texture "checks" "color" "checkerboard"
+		"float uscale" [4] "float vscale" [4]
+		"color tex1" [0 0 1] "color tex2" [0 1 1] 
+
+Texture "lines-bump" "float" "imagemap" "string filename" ["textures/lines.exr"]
+
+# walls
+AttributeBegin
+  # white walls  material
+  Material "plastic" 
+#		"texture Kd" "checks"
+		"color Kd" [0.9 0.9 0.9]
+		"color Ks"    [0.1 0.1 0.1]
+		"float roughness" 0.15
+#		"texture bumpmap" "lines-bump"
+# back wall
+Shape "trianglemesh" 
+     		"integer indices" [0 1 2 2 3 0]
+		"point P" [-1 1 -1   -1 1 1   1 1 1   1 1 -1]
+# ceiling
+Shape "trianglemesh" 
+     		"integer indices" [2 1 0 0 3 2]
+		"point P" [-1 1 1   1 1 1   1 -1 1   -1 -1 1]
+# floor
+Shape "trianglemesh" 
+     		"integer indices" [0 1 2 2 3 0]
+		"point P" [-1 1 -1   1 1 -1   1 -1 -1   -1 -1 -1]
+
+# red wall material
+  Material "plastic" 
+              "color Kd"    [0.8 0.1 0.1]
+		  "color Ks"    [0.1 0.1 0.1]
+		  "float roughness" 0.15
+  # left red wall
+  Shape "trianglemesh" 
+     		"integer indices" [0 1 2 2 3 0]
+		"point P" [-1 -1 -1   -1 -1 1   -1 1 1   -1 1 -1]
+  # blue wall material
+  Material "plastic" 
+              "color Kd"    [0.2 0.3 0.8]
+		  "color Ks"    [0.1 0.1 0.1]
+		  "float roughness" 0.15
+  # right blue wall
+  Shape "trianglemesh" 
+     		"integer indices" [2 1 0 0 3 2]
+		"point P" [1 -1 -1   1 -1 1   1 1 1   1 1 -1]
+	
+#Material "plastic" 
+		#"color Kd" [0.9 0.9 0.9]
+		#"color Ks"    [0.1 0.1 0.1]
+		#"float roughness" 0.15
+	
+# light occluder
+	#Shape "trianglemesh"
+	#"integer indices" [2 1 0 2 3 1]
+	#"point P" [-0.3 -0.3 0.79 0.3 -0.3 0.79 -0.3 0.3 0.79 0.3 0.3 0.79 ]
+	
+	#Shape "trianglemesh"
+	#"integer indices" [2 1 0 2 3 1]
+	#"point P" [-0.3 -0.3 0.79 -0.3 -0.3 0.95 -0.3 0.3 0.79 -0.3 0.3 0.95 ]
+	
+	#Shape "trianglemesh"
+	#"integer indices" [2 1 0 2 3 1]
+	#"point P" [0.3 -0.3 0.95 0.3 -0.3 0.79 0.3 0.3 0.95 0.3 0.3 0.79 ]
+	
+	#Shape "trianglemesh"
+	#"integer indices" [2 1 0 2 3 1]
+	#"point P" [-0.3 -0.3 0.79 0.3 -0.3 0.79 -0.3 -0.3 0.95 0.3 -0.3 0.95 ]
+	
+	#Shape "trianglemesh"
+	#"integer indices" [2 1 0 2 3 1]
+	#"point P" [-0.3 0.3 0.95 0.3 0.3 0.95 -0.3 0.3 0.79 0.3 0.3 0.79 ]
+	
+	#Shape "trianglemesh"
+	#"integer indices" [2 1 0 2 3 1]
+	#"point P" [-0.90 -0.90 0.60 0.90 -0.90 0.60 -0.90 0.90 0.60 0.90 0.90 0.60 ]
+
+AttributeEnd
+
+# glass sphere
+AttributeBegin
+  Translate -0.45 0 -0.1
+  # glass  material
+  Material "glass" 
+		"color Kr" [0.6 0.6 0.6]
+		"color Kt" [0.96 0.96 0.96]
+		"float index" [1.5]
+  Shape "sphere" "float radius" [0.35]
+AttributeEnd
+
+# metal sphere
+AttributeBegin
+  Translate 0.45 0.4 -0.65
+  # metal  material
+  Material "shinymetal" 
+		"color Ks" [0.7 0.7 0.7]
+		"color Kr" [0.8 0.8 0.8]
+		"float roughness" [0.02]
+  Shape "sphere" "float radius" [0.35]
+AttributeEnd
+
+# mirror
+AttributeBegin
+  # mirror material
+  Material "mirror" 
+		  "color Kr"    [0.9 0.9 0.9]
+  # mirror
+  Shape "trianglemesh" 
+     		"integer indices" [2 1 0 1 3 2]
+		"point P" [0.99 -0.45 0    0.99 0.45 0   0.99 -0.45 -0.9        0.99 0.45 -0.9]
+AttributeEnd
+
+WorldEnd
