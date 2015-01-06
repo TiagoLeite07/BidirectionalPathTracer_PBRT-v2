@@ -13,3 +13,5 @@ Add BDPT to PBRT-v2:
     else if (name == "bidirectionalpath") si = CreateBidirectionalPathSurfaceIntegrator(paramSet);
 
 - Build the project
+
+NOTE: This algorithm has some errors. Feel free to correct them if you can. And then tell me :P
